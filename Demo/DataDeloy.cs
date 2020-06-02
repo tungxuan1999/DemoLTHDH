@@ -9,6 +9,8 @@ namespace Demo
     {
         ItemData itemData;
         ItemType itemType;
+        public int[][] loca;
+        public int[] flag;
 
         public DataDeloy(ItemType itemType)
         {
@@ -153,8 +155,8 @@ namespace Demo
         }
         public ItemData getDataOPT()
         {
-            int[][] loca = new int[itemType.arrayInt.Count][];
-            int[] flag = new int[itemType.arrayInt.Count];
+            loca = new int[itemType.arrayInt.Count][];
+            flag = new int[itemType.arrayInt.Count];
             for (int i = 0; i < loca.Length; i++)
             {
                 loca[i] = new int[itemType.frame];
@@ -203,16 +205,19 @@ namespace Demo
                     {
                         if (itemType.arrayInt[i] == itemData.xy[i - 1][j])
                         {
-                            for (int k = i + 1; k < itemData.xy.Length; k++)
+                            for (int k = i + 1; k <= itemData.xy.Length; k++)
                             {
-                                if (itemType.arrayInt[i] == itemType.arrayInt[k])
-                                {
-                                    loca[i][j] = k;
-                                    break;
-                                }
-                                if (k == itemData.xy.Length - 1)
+                                if (k == itemData.xy.Length)
                                 {
                                     loca[i][j] = itemType.arrayInt.Count;
+                                }
+                                else
+                                {
+                                    if (itemType.arrayInt[i] == itemType.arrayInt[k])
+                                    {
+                                        loca[i][j] = k;
+                                        break;
+                                    }
                                 }
                             }
                             itemData.pagefalut[i] = -1;
@@ -259,18 +264,18 @@ namespace Demo
         }
         public ItemData getDataCLOCK()
         {
-            int[][] status = new int[itemType.arrayInt.Count][];
-            int[] next = new int[itemType.arrayInt.Count];
-            for (int i = 0; i < status.Length; i++)
+            loca = new int[itemType.arrayInt.Count][];
+            flag = new int[itemType.arrayInt.Count];
+            for (int i = 0; i < loca.Length; i++)
             {
-                status[i] = new int[itemType.frame];
+                loca[i] = new int[itemType.frame];
             }
             for (int i = 0; i < itemType.arrayInt.Count; i++)
             {
                 if (i == 0)
                 {
-                    itemData.xy[i][next[i]] = itemType.arrayInt[i];
-                    next[i] = (next[i] + 1) % itemType.frame;
+                    itemData.xy[i][flag[i]] = itemType.arrayInt[i];
+                    flag[i] = (flag[i] + 1) % itemType.frame;
                     itemData.pagefalut[i] = 1;
                 }
                 else
@@ -278,10 +283,10 @@ namespace Demo
                     //coppy next, status, page before
                     for (int j = 0; j < itemType.frame; j++)
                     {
-                        status[i][j] = status[i - 1][j];
+                        loca[i][j] = loca[i - 1][j];
                         itemData.xy[i][j] = itemData.xy[i - 1][j];
                     }
-                    next[i] = next[i - 1];
+                    flag[i] = flag[i - 1];
                     //insert next, page now
                     ////same page
                     bool checksame = false;
@@ -289,7 +294,7 @@ namespace Demo
                     {
                         if (itemType.arrayInt[i] == itemData.xy[i - 1][j])
                         {
-                            status[i][j]++;
+                            loca[i][j]++;
                             checksame = true;
                             itemData.pagefalut[i] = -1;
                             break;
@@ -298,15 +303,15 @@ namespace Demo
                     ////different
                     if (!checksame)
                     {
-                        while (status[i][next[i]] > 0)
+                        while (loca[i][flag[i]] > 0)
                         {
-                            status[i][next[i]]--;
-                            next[i] = (next[i] + 1) % itemType.frame;
+                            loca[i][flag[i]]--;
+                            flag[i] = (flag[i] + 1) % itemType.frame;
                         }
-                        if (status[i][next[i]] == 0)
+                        if (loca[i][flag[i]] == 0)
                         {
-                            itemData.xy[i][next[i]] = itemType.arrayInt[i];
-                            next[i] = (next[i] + 1) % itemType.frame;
+                            itemData.xy[i][flag[i]] = itemType.arrayInt[i];
+                            flag[i] = (flag[i] + 1) % itemType.frame;
                             itemData.pagefalut[i] = 1;
                         }
                     }

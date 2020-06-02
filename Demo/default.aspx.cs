@@ -14,8 +14,11 @@ namespace Demo
 {
     public partial class _default : System.Web.UI.Page
     {
+        private static string title0 = "Frame\\Page ref";
+        private static string title1 = "##############";
+        private static string title2 = "#######";
         ItemType itemType;
-        ItemData itemDataFIFO, itemDataLRU, itemDataOPT, itemDataCLOCK;
+        DataDeloy dataDeloy;
         protected void Page_Load(object sender, EventArgs e)
         {
             itemType = new ItemType();
@@ -57,26 +60,129 @@ namespace Demo
 
         public void setGridview()
         {
-            itemDataFIFO = new DataDeloy(itemType).getDataFIFO();
-            GridViewFIFO.DataSource = gridViewInstall(itemDataFIFO, "FIFO");
+            dataDeloy = new DataDeloy(itemType);
+
+            GridViewFIFO.DataSource = gridViewInstall(dataDeloy, "FIFO", 0);
             GridViewFIFO.DataBind();
 
-            itemDataLRU = new DataDeloy(itemType).getDataLRU();
-            GridViewLRU.DataSource = gridViewInstall(itemDataLRU, "LRU");
+            GridViewLRU.DataSource = gridViewInstall(dataDeloy, "LRU", 1);
             GridViewLRU.DataBind();
 
-            itemDataOPT = new DataDeloy(itemType).getDataOPT();
-            GridViewOPT.DataSource = gridViewInstall(itemDataOPT, "OPT");
+            GridViewOPT.DataSource = gridViewInstall(dataDeloy, "OPT", 2);
             GridViewOPT.DataBind();
 
-            itemDataCLOCK = new DataDeloy(itemType).getDataCLOCK();
-            GridViewCLOCK.DataSource = gridViewInstall(itemDataCLOCK, "CLOCK");
+            GridViewCLOCK.DataSource = gridViewInstall(dataDeloy, "CLOCK", 3);
             GridViewCLOCK.DataBind();
         }
 
-        public DataTable gridViewInstall(ItemData itemData,String key)
+        public void gridViewLocaOPT(DataDeloy dataDeloy)
         {
+            DataTable dataTable = new DataTable("LocaOPT");
+            dataTable.Columns.Add(new DataColumn(" ", typeof(string)));
+            for (int i = 0; i < itemType.arrayInt.Count; i++)
+            {
+                dataTable.Columns.Add(new DataColumn(i.ToString(), typeof(string)));
+            }
+            dataTable.Rows.Add();
+            dataTable.Rows[dataTable.Rows.Count - 1][" "] = title1;
+            for (int j = 0; j < itemType.arrayInt.Count; j++)
+            {
+                dataTable.Rows[dataTable.Rows.Count - 1][j.ToString()] = title2;
+            }
+
+            for (int i = 0; i < itemType.frame; i++)
+            {
+                dataTable.Rows.Add();
+                dataTable.Rows[dataTable.Rows.Count - 1][" "] = String.Format("[{0}]", i);
+                for (int j = 0; j < itemType.arrayInt.Count; j++)
+                {
+                    dataTable.Rows[dataTable.Rows.Count - 1][j.ToString()] = "" + dataDeloy.loca[j][i];
+                }
+            }
+            dataTable.Rows.Add();
+            dataTable.Rows[dataTable.Rows.Count - 1][" "] = title1;
+            for (int j = 0; j < itemType.arrayInt.Count; j++)
+            {
+                dataTable.Rows[dataTable.Rows.Count - 1][j.ToString()] = title2;
+            }
+
+            GridViewLOCAOPT.DataSource = dataTable;
+            GridViewLOCAOPT.DataBind();
+        }
+
+        public void gridViewStatusNextCLOCK(DataDeloy dataDeloy)
+        {
+            DataTable dataTable = new DataTable("STATUSNextCLOCK");
+            dataTable.Columns.Add(new DataColumn(" ", typeof(string)));
+            for (int i = 0; i < itemType.arrayInt.Count; i++)
+            {
+                dataTable.Columns.Add(new DataColumn(i.ToString(), typeof(string)));
+            }
+            dataTable.Rows.Add();
+            dataTable.Rows[dataTable.Rows.Count - 1][" "] = title1;
+            for (int j = 0; j < itemType.arrayInt.Count; j++)
+            {
+                dataTable.Rows[dataTable.Rows.Count - 1][j.ToString()] = title2;
+            }
+
+            for (int i = 0; i < itemType.frame; i++)
+            {
+                dataTable.Rows.Add();
+                dataTable.Rows[dataTable.Rows.Count - 1][" "] = String.Format("Status[{0}]", i);
+                for (int j = 0; j < itemType.arrayInt.Count; j++)
+                {
+                    dataTable.Rows[dataTable.Rows.Count - 1][j.ToString()] = "" + dataDeloy.loca[j][i];
+                }
+            }
+            dataTable.Rows.Add();
+            dataTable.Rows[dataTable.Rows.Count - 1][" "] = title1;
+            for (int j = 0; j < itemType.arrayInt.Count; j++)
+            {
+                dataTable.Rows[dataTable.Rows.Count - 1][j.ToString()] = title2;
+            }
+            dataTable.Rows.Add();
+            dataTable.Rows[dataTable.Rows.Count - 1][" "] = "Next";
+            for (int j = 0; j < itemType.arrayInt.Count; j++)
+            {
+                dataTable.Rows[dataTable.Rows.Count - 1][j.ToString()] = "" + dataDeloy.flag[j];
+            }
+
+            GridViewStatusNextCLOCK.DataSource = dataTable;
+            GridViewStatusNextCLOCK.DataBind();
+        }
+
+        public DataTable gridViewInstall(DataDeloy dataDeloy, String key, int kind)
+        {
+   
             DataTable dataTable = new DataTable(key);
+            ItemData itemData;
+
+            // Đổ data main
+            switch (kind)
+            {
+                case 0:
+                    {
+                        itemData = dataDeloy.getDataFIFO();
+                    }
+                    break;
+                case 1:
+                    {
+                        itemData = dataDeloy.getDataLRU();
+                    }
+                    break;
+                case 2:
+                    {
+                        itemData = dataDeloy.getDataOPT();
+                    }break;
+                case 3:
+                    {
+                        itemData = dataDeloy.getDataCLOCK();
+                    }break;
+                default:
+                    return dataTable;
+            }
+
+
             dataTable.Columns.Add(new DataColumn(" ", typeof(string)));
             for (int i = 0; i < itemType.arrayInt.Count; i++)
             {
@@ -84,14 +190,18 @@ namespace Demo
             }
 
             dataTable.Rows.Add();
-            dataTable.Rows[dataTable.Rows.Count - 1][" "] = "Frame\\Page ref";
+            dataTable.Rows[dataTable.Rows.Count - 1][" "] = title0;
             for (int j = 0; j < itemType.arrayInt.Count; j++)
             {
                 dataTable.Rows[dataTable.Rows.Count - 1][j.ToString()] = itemType.arrayInt[j];
             }
+            dataTable.Rows.Add();
+            for (int j = 0; j < itemType.arrayInt.Count; j++)
+            {
+                dataTable.Rows[dataTable.Rows.Count - 1][j.ToString()] = title2;
+            }
             for (int i = 0; i < itemType.frame; i++)
             {
-
                 dataTable.Rows.Add();
                 dataTable.Rows[dataTable.Rows.Count - 1][" "] = String.Format("Frame[{0}]", i);
                 for (int j = 0; j < itemType.arrayInt.Count; j++)
@@ -104,9 +214,10 @@ namespace Demo
                 }
             }
             dataTable.Rows.Add();
+            dataTable.Rows[dataTable.Rows.Count - 1][" "] = title1;
             for (int j = 0; j < itemType.arrayInt.Count; j++)
             {
-                dataTable.Rows[dataTable.Rows.Count - 1][j.ToString()] = "#######";
+                dataTable.Rows[dataTable.Rows.Count - 1][j.ToString()] = title2;
             }
             dataTable.Rows.Add();
             dataTable.Rows[dataTable.Rows.Count - 1][" "] = "Page fault";
@@ -117,6 +228,21 @@ namespace Demo
                     dataTable.Rows[dataTable.Rows.Count - 1][j.ToString()] = "F";
                 }
             }
+
+            // Đổ data next, loca
+            switch (kind)
+            {
+                case 2:
+                    {
+                        gridViewLocaOPT(dataDeloy);
+                    }
+                    break;
+                case 3:
+                    {
+                        gridViewStatusNextCLOCK(dataDeloy);
+                    }
+                    break;
+            }
             return dataTable;
         }
 
@@ -125,7 +251,7 @@ namespace Demo
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
 
-                for (int i = 0; i < itemDataFIFO.pagefalut.Length; i++)
+                for (int i = 0; i < dataDeloy.getDataLRU().pagefalut.Length; i++)
                 {
                     if ((e.Row.Cells[i + 1].Text) == itemType.arrayInt[i].ToString())
                     {
@@ -141,7 +267,7 @@ namespace Demo
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
 
-                for (int i = 0; i < itemDataFIFO.pagefalut.Length; i++)
+                for (int i = 0; i < dataDeloy.getDataCLOCK().pagefalut.Length; i++)
                 {
                     if ((e.Row.Cells[i + 1].Text) == itemType.arrayInt[i].ToString())
                     {
@@ -157,7 +283,7 @@ namespace Demo
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
 
-                for (int i = 0; i < itemDataFIFO.pagefalut.Length; i++)
+                for (int i = 0; i < dataDeloy.getDataOPT().pagefalut.Length; i++)
                 {
                     if ((e.Row.Cells[i + 1].Text) == itemType.arrayInt[i].ToString())
                     {
@@ -173,7 +299,7 @@ namespace Demo
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
 
-                for (int i = 0; i < itemDataFIFO.pagefalut.Length; i++)
+                for (int i = 0; i < dataDeloy.getDataFIFO().pagefalut.Length; i++)
                 {
                     if ((e.Row.Cells[i + 1].Text) == itemType.arrayInt[i].ToString())
                     {

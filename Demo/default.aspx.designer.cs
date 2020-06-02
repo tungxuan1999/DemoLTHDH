@@ -78,6 +78,15 @@ namespace Demo
         protected global::System.Web.UI.WebControls.GridView GridViewOPT;
 
         /// <summary>
+        /// GridViewLOCAOPT control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewLOCAOPT;
+
+        /// <summary>
         /// GridViewCLOCK control.
         /// </summary>
         /// <remarks>
@@ -85,5 +94,14 @@ namespace Demo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridViewCLOCK;
+
+        /// <summary>
+        /// GridViewStatusNextCLOCK control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewStatusNextCLOCK;
     }
 }

@@ -63,8 +63,14 @@
                 <h1>OPT</h1>
                 <asp:GridView ID="GridViewOPT" runat="server" OnRowDataBound="GridViewOPT_RowDataBound"
                     ></asp:GridView>
+                <br />
+                <asp:GridView ID="GridViewLOCAOPT" runat="server"
+                    ></asp:GridView>
                 <h1>CLOCK</h1>
                 <asp:GridView ID="GridViewCLOCK" runat="server" OnRowDataBound="GridViewCLOCK_RowDataBound" 
+                    ></asp:GridView>
+                <br />
+                <asp:GridView ID="GridViewStatusNextCLOCK" runat="server"
                     ></asp:GridView>
             </div>
         </div>
