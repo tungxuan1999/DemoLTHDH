@@ -141,7 +141,7 @@ namespace Demo
             {
                 dataTable.Rows.Add();
                 dataTable.Rows[dataTable.Rows.Count - 1][" "] = String.Format("Count[{0}]", i);
-                dataTable.Rows[dataTable.Rows.Count - 1][title3] = 0;
+                dataTable.Rows[dataTable.Rows.Count - 1][title3] = -1;
                 for (int j = 0; j < itemType.arrayInt.Count; j++)
                 {
                     dataTable.Rows[dataTable.Rows.Count - 1][j.ToString()] = "" + dataDeloy.loca[j][i];
