@@ -24,6 +24,7 @@ namespace Demo
             {
                 if (i == 0)
                 {
+                    //
                     itemData.xy[i][0] = itemType.arrayInt[i];
                     itemData.pagefalut[i] = i % itemType.frame;
                 }
@@ -294,7 +295,7 @@ namespace Demo
                     {
                         if (itemType.arrayInt[i] == itemData.xy[i - 1][j])
                         {
-                            loca[i][j]++;
+                            loca[i][j] = 1;
                             checksame = true;
                             itemData.pagefalut[i] = -1;
                             break;
@@ -305,7 +306,7 @@ namespace Demo
                     {
                         while (loca[i][flag[i]] > 0)
                         {
-                            loca[i][flag[i]]--;
+                            loca[i][flag[i]] = 0;
                             flag[i] = (flag[i] + 1) % itemType.frame;
                         }
                         if (loca[i][flag[i]] == 0)
