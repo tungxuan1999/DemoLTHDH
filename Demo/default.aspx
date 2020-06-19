@@ -48,8 +48,10 @@
                 <a margin-left="InputFrame">Nhập frame: 3</a><br />
                 Lưu ý<br />
                 Chuỗi và frame phải là số nguyên dương</div>
-            <div class="div3" align="center">
-                <a>By https://www.facebook.com/Linning154 </a>
+            <div class="div3" align="left">
+                <a>Học kỳ 19.2A</a><br />
+                <a>Demo: https://www.facebook.com/Linning154 </a><br />
+                <a>GV hướng dẫn: TS. Phan Đình Huân</a>
             </div>
             </div>
         <div class="div1" id="divFINAL">
@@ -57,8 +59,14 @@
                 <h1>FIFO</h1>
                 <asp:GridView ID="GridViewFIFO" runat="server" OnRowDataBound="GridViewFIFO_RowDataBound"
                     ></asp:GridView>
+                <br />
+                <asp:GridView ID="GridViewNextFIRO" runat="server"
+                    ></asp:GridView>
                 <h1>LRU</h1>
                 <asp:GridView ID="GridViewLRU" runat="server" OnRowDataBound="GridViewLRU_RowDataBound"
+                    ></asp:GridView>
+                <br />
+                <asp:GridView ID="GridViewLOCALRU" runat="server"
                     ></asp:GridView>
                 <h1>OPT</h1>
                 <asp:GridView ID="GridViewOPT" runat="server" OnRowDataBound="GridViewOPT_RowDataBound"

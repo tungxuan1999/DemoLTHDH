@@ -20,8 +20,10 @@ namespace Demo
 
         public ItemData getDataFIFO()
         {
+            flag = new int[itemType.arrayInt.Count];
             for (int i = 0; i < itemData.xy.Length; i++)
             {
+                flag[i] = (i + 1) % itemType.frame;
                 if (i == 0)
                 {
                     //
@@ -74,15 +76,34 @@ namespace Demo
         }
         public ItemData getDataLRU()
         {
+            loca = new int[itemType.arrayInt.Count][];
+            for (int i = 0; i < loca.Length; i++)
+            {
+                loca[i] = new int[itemType.frame];
+            }
+            for (int i = 0; i < loca.Length; i++)
+            {
+                for (int j = 0; j < loca[i].Length; j++)
+                {
+                    loca[i][j] = -1;
+                }
+            }
             for (int i = 0; i < itemData.xy.Length; i++)
             {
                 if (i == 0)
                 {
                     itemData.xy[i][0] = itemType.arrayInt[i];
                     itemData.pagefalut[i] = i % itemType.frame;
+                    loca[i][0] = i;
                 }
                 else
                 {
+                    //coppy loca
+                    for(int k = 0; k < itemType.frame; k++)
+                    {
+                        loca[i][k] = loca[i - 1][k];
+                    }
+
                     bool check = false;
                     for (int k = 0; k < itemType.frame; k++)
                     {
@@ -94,6 +115,7 @@ namespace Demo
                                 itemData.xy[i][j] = itemData.xy[i - 1][j];
                             }
                             check = true;
+                            loca[i][k] = i;
                             break;
                         }
                         if (itemData.xy[i - 1][k] == -1)
@@ -105,6 +127,7 @@ namespace Demo
                             }
                             itemData.xy[i][k] = itemType.arrayInt[i];
                             check = true;
+                            loca[i][k] = i;
                             break;
                         }
                     }
@@ -147,6 +170,7 @@ namespace Demo
                                 itemData.xy[i][k] = itemData.xy[i - 1][k];
                             }
                             itemData.xy[i][loca] = itemType.arrayInt[i];
+                            this.loca[i][loca] = i;
                             break;
                         }
                     }

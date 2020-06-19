@@ -60,6 +60,15 @@ namespace Demo
         protected global::System.Web.UI.WebControls.GridView GridViewFIFO;
 
         /// <summary>
+        /// GridViewNextFIRO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewNextFIRO;
+
+        /// <summary>
         /// GridViewLRU control.
         /// </summary>
         /// <remarks>
@@ -67,6 +76,15 @@ namespace Demo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridViewLRU;
+
+        /// <summary>
+        /// GridViewLOCALRU control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewLOCALRU;
 
         /// <summary>
         /// GridViewOPT control.
