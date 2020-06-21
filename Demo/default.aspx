@@ -51,7 +51,7 @@
             <div class="div3" align="left">
                 <a>Học kỳ 19.2A</a><br />
                 <a>Demo: https://www.facebook.com/Linning154 </a><br />
-                <a>GV hướng dẫn: TS. Phan Đình Huân</a>
+                <a>GV hướng dẫn: TS. Phan Đình Thế Huân</a>
             </div>
             </div>
         <div class="div1" id="divFINAL">
